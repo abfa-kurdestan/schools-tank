@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Water Tank - تانکرهای آب</title>
+  <title>تانکرهای آب</title>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -47,6 +47,10 @@
     <i class="fas fa-crosshairs"></i>
   </div>
 
+
+  <a href="https://t.me/Carwan" target="_blank" class="support-btn top-left">
+    <i class="fab fa-telegram-plane"></i>
+  </a>
   <!-- legend  -->
   <div id="legend">
     <div class="legend-item">
@@ -211,6 +215,7 @@
 
         // === 6. موقعیت‌یابی کاربر (اصلاح شده و قوی‌تر) ===
 
+        // === 6. موقعیت‌یابی کاربر (نسخه هوشمند و دو مرحله‌ای) ===
         window.locateUser = function () {
           if (!navigator.geolocation) {
             alert("مرورگر شما قدیمی است و پشتیبانی نمی‌کند.");
@@ -222,13 +227,7 @@
           btnIcon.classList.remove('fa-crosshairs');
           btnIcon.classList.add('fa-spinner', 'fa-spin');
 
-          // تنظیمات موقعیت‌یابی
-          const options = {
-            enableHighAccuracy: true, // اولویت با GPS دقیق
-            timeout: 15000,           // 15 ثانیه صبر کن (قبلاً 5 بود)
-            maximumAge: 10000         // اگر لوکیشن 10 ثانیه پیش را داری، همان را بده (سریع‌تر)
-          };
-
+          // تابع موفقیت (مشترک)
           function success(position) {
             const lat = position.coords.latitude;
             const lng = position.coords.longitude;
@@ -236,10 +235,8 @@
             // زوم روی کاربر
             map.setView([lat, lng], 16);
 
-            // حذف مارکر قبلی
             if (userMarker) map.removeLayer(userMarker);
 
-            // ایجاد مارکر جدید (دایره نارنجی)
             userMarker = L.circleMarker([lat, lng], {
               radius: 10,
               fillColor: "#ff5722",
@@ -251,31 +248,53 @@
 
             userMarker.bindPopup("موقعیت شما").openPopup();
 
-            // بازگشت آیکون دکمه
+            // بازگشت آیکون
             btnIcon.classList.remove('fa-spinner', 'fa-spin');
             btnIcon.classList.add('fa-crosshairs');
           }
 
-          function error(err) {
-            // بازگشت آیکون دکمه
-            btnIcon.classList.remove('fa-spinner', 'fa-spin');
-            btnIcon.classList.add('fa-crosshairs');
-
-            // تشخیص دقیق علت خطا
-            if (err.code === 1) {
-              alert("شما اجازه دسترسی به موقعیت مکانی را رد کردید.");
-            } else if (err.code === 2) {
-              alert("موقعیت مکانی شما پیدا نشد (GPS خاموش است؟).");
-            } else if (err.code === 3) {
-              alert("زمان درخواست تمام شد. لطفاً دوباره تلاش کنید.");
-              // نکته: اگر این خطا زیاد رخ داد، یعنی اینترنت یا GPS ضعیف است
-            } else {
-              alert("خطای ناشناخته در دریافت موقعیت.");
+          // تابع مدیریت خطا
+          function handleError(err, isHighAccuracy) {
+            // اگر تلاش اول (دقیق) بود و تایم‌اوت شد، حالا تلاش دوم (تقریبی) را انجام بده
+            if (isHighAccuracy && (err.code === 3 || err.code === 2)) {
+              console.log("GPS failed, trying low accuracy...");
+              navigator.geolocation.getCurrentPosition(
+                success,
+                (finalErr) => handleError(finalErr, false), // اگر باز هم خطا داد
+                {
+                  enableHighAccuracy: false, // این بار دقت پایین (سریع‌تر)
+                  timeout: 10000,
+                  maximumAge: 0
+                }
+              );
+              return;
             }
-            console.warn(`ERROR(${err.code}): ${err.message}`);
+
+            // اگر تلاش دوم هم شکست خورد یا خطا مربوط به مجوز (Permission) بود:
+            btnIcon.classList.remove('fa-spinner', 'fa-spin');
+            btnIcon.classList.add('fa-crosshairs');
+
+            if (err.code === 1) {
+              alert("لطفاً دسترسی موقعیت مکانی (GPS) را در مرورگر فعال کنید.");
+            } else if (err.code === 2) {
+              alert("موقعیت شما پیدا نشد. لطفاً GPS را روشن کنید.");
+            } else if (err.code === 3) {
+              alert("اینترنت یا GPS ضعیف است. لطفاً در فضای باز امتحان کنید.");
+            } else {
+              alert("خطای ناشناخته.");
+            }
           }
 
-          navigator.geolocation.getCurrentPosition(success, error, options);
+          // تلاش اول: با دقت بالا (High Accuracy)
+          navigator.geolocation.getCurrentPosition(
+            success,
+            (err) => handleError(err, true),
+            {
+              enableHighAccuracy: true,
+              timeout: 10000, // ۱۰ ثانیه برای GPS صبر کن
+              maximumAge: 0
+            }
+          );
         };
 
       });
