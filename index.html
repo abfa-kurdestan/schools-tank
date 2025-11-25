@@ -52,7 +52,7 @@
     <div class="legend-item">
       <div class="school-icon"> <i class="fas fa-school"></i>
       </div>
-      <span> مدرسه </span>
+      <span> تانکر 1000 لیتری مدارس </span>
     </div>
 
 
@@ -150,10 +150,29 @@
         };
 
         // === 5. ایجاد کلاستر مارکرها ===
+        // === 5. ایجاد کلاستر مارکرها (با آیکون سفارشی مدرسه) ===
         const markersCluster = L.markerClusterGroup({
           showCoverageOnHover: false,
           spiderfyOnMaxZoom: true,
-          disableClusteringAtZoom: 18
+          disableClusteringAtZoom: 18,
+
+          // تابع ساخت آیکون کلاستر سفارشی
+          iconCreateFunction: function (cluster) {
+            const count = cluster.getChildCount();
+
+            // در اینجا آیکون مدرسه را همراه با عدد (badge) برمی‌گردانیم
+            return L.divIcon({
+              html: `
+                <div class='cluster-wrapper'>
+                   <div class='school-icon'><i class='fas fa-school'></i></div>
+                   <span class='cluster-badge'>${count}</span>
+                </div>
+              `,
+              className: 'marker-cluster-custom', // کلاسی که در CSS تعریف کردیم
+              iconSize: [32, 32],
+              iconAnchor: [16, 16]
+            });
+          }
         });
 
         waterPoints.forEach(point => {
@@ -244,14 +263,14 @@
 
             // تشخیص دقیق علت خطا
             if (err.code === 1) {
-                alert("شما اجازه دسترسی به موقعیت مکانی را رد کردید.");
+              alert("شما اجازه دسترسی به موقعیت مکانی را رد کردید.");
             } else if (err.code === 2) {
-                alert("موقعیت مکانی شما پیدا نشد (GPS خاموش است؟).");
+              alert("موقعیت مکانی شما پیدا نشد (GPS خاموش است؟).");
             } else if (err.code === 3) {
-                alert("زمان درخواست تمام شد. لطفاً دوباره تلاش کنید.");
-                // نکته: اگر این خطا زیاد رخ داد، یعنی اینترنت یا GPS ضعیف است
+              alert("زمان درخواست تمام شد. لطفاً دوباره تلاش کنید.");
+              // نکته: اگر این خطا زیاد رخ داد، یعنی اینترنت یا GPS ضعیف است
             } else {
-                alert("خطای ناشناخته در دریافت موقعیت.");
+              alert("خطای ناشناخته در دریافت موقعیت.");
             }
             console.warn(`ERROR(${err.code}): ${err.message}`);
           }
