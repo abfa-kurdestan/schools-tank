@@ -217,3 +217,7 @@ body {
 .leaflet-control-attribution {
     display: none !important;
 }
+
+.legend-item .school-icon {
+    margin-left: 4px;
+}
