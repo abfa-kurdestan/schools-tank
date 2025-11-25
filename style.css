@@ -158,16 +158,17 @@ body {
 
 /* مارکر مدرسه (آبی با آیکون مدرسه) */
 .school-icon {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     background: #00a163;
     border-radius: 50%;
     color: white;
-    line-height: 32px;
+    line-height: 20px;
     text-align: center;
     border: 2px solid white;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
+
 
 
 /*legend*/
