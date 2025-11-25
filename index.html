@@ -1045,8 +1045,7 @@
         const marker = L.marker([point.lat, point.lng], { icon: iconToUse });
 
         // لینک گوگل مپ
-        const googleMapsUrl = `https://www.google.com/maps?q=$${point.lat},${point.lng}`;
-
+        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${point.lat},${point.lng}`;
         // محتوای پاپ‌آپ
         const popupContent = `
             <div class="popup-content">
