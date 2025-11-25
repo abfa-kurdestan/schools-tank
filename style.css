@@ -1,0 +1,216 @@
+/* style.css */
+
+/* تنظیمات کلی صفحه */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', 'Tahoma', 'Helvetica Neue', sans-serif;
+    overflow: hidden;
+}
+
+/* کانتینر نقشه */
+#map {
+    width: 100%;
+    height: calc(100% - 60px);
+    z-index: 1;
+}
+
+/* ===== هدر سایت ===== */
+.site-header {
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(to left, #0077b6, #0096c7);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1000;
+    direction: rtl;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-content i {
+    font-size: 24px;
+}
+
+.header-content h1 {
+    font-size: 18px;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* ===== استایل دکمه‌های داخل پاپ‌آپ ===== */
+.custom-popup .leaflet-popup-content-wrapper {
+    border-radius: 12px;
+    text-align: center;
+    padding: 5px;
+}
+
+.popup-content h3 {
+    margin: 0 0 5px 0;
+    color: #0077b6;
+    font-size: 16px;
+}
+
+.popup-content p {
+    margin: 5px 0 15px 0;
+    font-size: 13px;
+    color: #555;
+}
+
+/* دکمه مسیریابی (آبی) */
+.navigate-btn {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #00b4d8;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.3s;
+    margin-top: 5px;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.navigate-btn:hover {
+    background-color: #0077b6;
+    color: white;
+}
+
+/* دکمه ارسال/اشتراک‌گذاری (سبز) - جدید */
+.share-btn {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #2a9d8f;
+    /* سبز */
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.3s;
+    margin-top: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    /* برای ارث‌بری فونت فارسی */
+
+    /* در فایل style.css */
+    -webkit-appearance: none;
+    /* برای سافاری و آیفون */
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    /* برای اطمینان */
+
+}
+
+.share-btn:hover {
+    background-color: #21867a;
+}
+
+.navigate-btn i,
+.share-btn i {
+    margin-left: 5px;
+}
+
+/* استایل آیکون مارکرها */
+/* ده هزار لیتری */
+
+.water-icon {
+    text-align: center;
+    line-height: 32px;
+    color: white;
+    background: #044eb6;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+}
+
+/* پنج هزار لیتری */
+
+.water-icon-5k {
+    text-align: center;
+    line-height: 32px;
+    color: white;
+    background: #4fa8ff;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+
+
+/* مارکر مدرسه (آبی با آیکون مدرسه) */
+.school-icon {
+    width: 32px;
+    height: 32px;
+    background: #00a163;
+    border-radius: 50%;
+    color: white;
+    line-height: 32px;
+    text-align: center;
+    border: 2px solid white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+
+/*legend*/
+#legend {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 9999;
+    font-size: 14px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.legend-item:last-child {
+    margin-bottom: 0;
+}
+
+
+
+
+
+/*icon legend*/
+
+#legend .water-icon,
+#legend .water-icon-5k {
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    font-size: 14px;
+    margin-left: 8px;
+}
+
+
+
+/*delecte liflet logo*/
+.leaflet-control-attribution {
+    display: none !important;
+}
