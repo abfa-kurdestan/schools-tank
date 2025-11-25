@@ -221,3 +221,147 @@ body {
 .legend-item .school-icon {
     margin-left: 4px;
 }
+
+
+/* --- دکمه‌های کنترلی جدید --- */
+.custom-control-btn {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #444;
+    transition: all 0.2s;
+}
+
+.custom-control-btn:active {
+    background-color: #f0f0f0;
+    transform: scale(0.95);
+}
+
+/* مکان دکمه تغییر نقشه (بالا راست) */
+.top-right {
+    top: 70px;
+    /* فاصله از هدر */
+    right: 10px;
+}
+
+/* مکان دکمه موقعیت یابی (پایین وسط - شناور) */
+.bottom-center {
+    bottom: 30px;
+    /* فاصله از پایین */
+    left: 50%;
+    transform: translateX(-50%);
+    /* برای دقیق وسط چین شدن */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* دایره‌ای */
+    background-color: #0077b6;
+    color: white;
+    font-size: 22px;
+    border: 2px solid white;
+}
+
+/* اصلاح رنگ کلاسترهای پیش‌فرض برای هماهنگی با تم آبی */
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large {
+    background-color: rgba(129, 212, 250, 0.6);
+}
+
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div {
+    background-color: rgba(4, 78, 182, 0.7);
+    color: white;
+}
+
+
+
+/* === استایل دکمه سوییچ جدید === */
+
+/* کادر کلی که دکمه و متن را نگه می‌دارد */
+.map-toggle-wrapper {
+    position: absolute;
+    z-index: 1000;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 30px;
+    /* گوشه‌های گرد */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* فاصله بین متن و دکمه */
+    direction: rtl;
+}
+
+/* متن کنار دکمه */
+.toggle-label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #444;
+}
+
+/* کادر اصلی سوییچ */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    /* عرض دکمه */
+    height: 26px;
+    /* ارتفاع دکمه */
+}
+
+/* مخفی کردن چک‌باکس واقعی */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* ظاهر گرافیکی سوییچ (بخش طوسی رنگ) */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    /* رنگ حالت خاموش (طوسی) */
+    transition: .4s;
+    border-radius: 34px;
+}
+
+/* دایره سفید داخل سوییچ */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* وقتی دکمه روشن می‌شود (رنگ آبی) */
+input:checked+.slider {
+    background-color: #0077b6;
+}
+
+/* حرکت دایره به سمت راست وقتی روشن می‌شود */
+input:checked+.slider:before {
+    transform: translateX(22px);
+}
